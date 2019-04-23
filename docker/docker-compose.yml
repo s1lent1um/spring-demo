@@ -1,0 +1,27 @@
+version: '2'
+services:
+#    api:
+#        image: api
+#        environment:
+#            - JAVA_OPTS=-Xms128m -Xmx512m -XX:CompressedClassSpaceSize=100m -XX:MetaspaceSize=100m -XX:MaxMetaspaceSize=100m
+#            - SPRING_PROFILES_ACTIVE=prod,swagger
+#            - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
+#            - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
+#            - JHIPSTER_SLEEP=${JHIPSTER_SLEEP}
+#            - JHIPSTER_REGISTRY_PASSWORD=admin
+    app:
+        depends_on:
+          - mongo
+        build: { context: .., dockerfile: docker/Dockerfile }
+        ports:
+            - 8080:8080
+
+    mongo:
+        image: mongo:3.4
+        container_name: mongo
+        hostname: mongo
+        #    ports:
+        #      - "27017:27017"
+        volumes:
+            - ./mongo/:/data/db/
+
